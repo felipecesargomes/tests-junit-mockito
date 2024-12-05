@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -41,6 +42,17 @@ public class ProdutoController {
         produto.setId(id);
         produtoRepository.save(produto);
         return ResponseEntity.ok(produto);
+    }
+
+    @GetMapping(value="/")
+    public ResponseEntity<Iterable<Produto>> findAll() {
+        Iterable<Produto> produtos = produtoRepository.findAll();
+        return ResponseEntity.ok(produtos);
+    }
+
+    @GetMapping
+    public List<Produto> find(@RequestParam("nome") String nome) {
+        return produtoRepository.findByNomeContainingIgnoreCase(nome);
     }
 
 }
