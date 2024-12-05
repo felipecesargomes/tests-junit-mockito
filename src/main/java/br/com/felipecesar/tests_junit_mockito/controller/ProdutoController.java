@@ -25,9 +25,22 @@ public class ProdutoController {
     }
 
     @PostMapping(value = "/")
-    public Produto save(@RequestBody Produto produto) {
+    public ResponseEntity<Produto> save(@RequestBody Produto produto) {
         produtoRepository.save(produto);
-        return produto;
+        return ResponseEntity.ok(produto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        produtoRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody Produto produto) {
+        produto.setId(id);
+        produtoRepository.save(produto);
+        return ResponseEntity.ok(produto);
     }
 
 }
