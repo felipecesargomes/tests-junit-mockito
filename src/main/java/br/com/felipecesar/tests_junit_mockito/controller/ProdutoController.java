@@ -26,9 +26,6 @@ public class ProdutoController {
 
     @PostMapping(value = "/")
     public Produto save(@RequestBody Produto produto) {
-        Random random = new Random();
-        var id = random.nextLong();
-        produto.setId(id);
         produtoRepository.save(produto);
         return produto;
     }
