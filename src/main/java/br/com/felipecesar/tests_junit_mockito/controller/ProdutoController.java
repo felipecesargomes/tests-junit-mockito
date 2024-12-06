@@ -1,7 +1,9 @@
 package br.com.felipecesar.tests_junit_mockito.controller;
 
+import br.com.felipecesar.tests_junit_mockito.dto.ProdutoDTO;
 import br.com.felipecesar.tests_junit_mockito.model.Produto;
 import br.com.felipecesar.tests_junit_mockito.repository.ProdutoRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +20,22 @@ public class ProdutoController {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private ModelMapper mapper;
+
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Produto> findById(@PathVariable Long id) {
+    public ResponseEntity<ProdutoDTO> findById(@PathVariable Long id) {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produto com ID " + id + " não encontrado."));
-        return ResponseEntity.ok(produto);
+        return ResponseEntity.ok(mapper.map(produto, ProdutoDTO.class));
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<Produto> save(@RequestBody Produto produto) {
-        produtoRepository.save(produto);
-        return ResponseEntity.ok(produto);
+    public ResponseEntity<ProdutoDTO> save(@RequestBody ProdutoDTO produtoDTO) {
+        Produto produto = mapper.map(produtoDTO, Produto.class);
+
+        Produto savedProduto = produtoRepository.save(produto);
+        return ResponseEntity.ok(mapper.map(savedProduto, ProdutoDTO.class));
     }
 
     @DeleteMapping(value = "/{id}")
@@ -38,10 +45,11 @@ public class ProdutoController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody Produto produto) {
+    public ResponseEntity<ProdutoDTO> update(@PathVariable Long id, @RequestBody ProdutoDTO produtoDTO) {
+        Produto produto = mapper.map(produtoDTO, Produto.class);
         produto.setId(id);
-        produtoRepository.save(produto);
-        return ResponseEntity.ok(produto);
+        Produto savedProduto = produtoRepository.save(produto);
+        return ResponseEntity.ok(mapper.map(savedProduto, ProdutoDTO.class));
     }
 
     @GetMapping(value="/")
