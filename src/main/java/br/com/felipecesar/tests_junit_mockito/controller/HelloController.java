@@ -1,5 +1,6 @@
 package br.com.felipecesar.tests_junit_mockito.controller;
 
+import br.com.felipecesar.tests_junit_mockito.anotations.Eletrico;
 import br.com.felipecesar.tests_junit_mockito.model.Motor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,11 +15,13 @@ import java.util.Map;
 public class HelloController {
 
     @Autowired
-    @Qualifier("motorEletrico")
+    @Qualifier("motorUsado")
     private Motor motor;
     @Autowired
-    @Qualifier("motorUsado")
     private Motor motor2;
+    @Eletrico
+    @Autowired
+    private Motor motor3;
 
     @GetMapping("/")
     public ResponseEntity<String>
@@ -29,8 +32,8 @@ public class HelloController {
     @GetMapping("/motor")
     public ResponseEntity<List<Motor>>
     motor() {
-        System.out.println("Motor 1: " + motor + ", Motor 2: " + motor2);
+        System.out.println("Motor 1: " + motor + ", Motor 2: " + motor2 + ", Motor 3: " + motor3);
 
-        return ResponseEntity.ok(List.of(motor, motor2));
+        return ResponseEntity.ok(List.of(motor, motor2, motor3));
     }
 }

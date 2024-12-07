@@ -3,10 +3,12 @@ package br.com.felipecesar.tests_junit_mockito.config;
 import br.com.felipecesar.tests_junit_mockito.model.Motor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class MotorBean {
 
+    @Primary
     @Bean(name = "motorEletrico")
     public Motor motorEletrico() {
         Motor motor = new Motor();
