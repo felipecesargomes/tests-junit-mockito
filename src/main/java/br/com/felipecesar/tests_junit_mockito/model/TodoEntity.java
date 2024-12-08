@@ -6,9 +6,9 @@ import jakarta.persistence.*;
 @Table(name="tb_todo")
 public class TodoEntity {
     @Id
-    @Column(name = "id")
+    @Column(name = "idTodo")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String descricao;
     @Column(name = "fl_concluido")
@@ -30,11 +30,22 @@ public class TodoEntity {
         this.descricao = descricao;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
+
+    public TodoEntity(Long id, String descricao, Boolean concluido) {
+        this.id = id;
+        this.descricao = descricao;
+        this.concluido = concluido;
+    }
+
+    public TodoEntity() {
+
+    }
+
 }

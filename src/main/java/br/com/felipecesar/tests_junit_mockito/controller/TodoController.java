@@ -1,16 +1,16 @@
 package br.com.felipecesar.tests_junit_mockito.controller;
 
 import br.com.felipecesar.tests_junit_mockito.Generics.GenericController;
-import br.com.felipecesar.tests_junit_mockito.model.TodoEntity;
-import br.com.felipecesar.tests_junit_mockito.service.TodoServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.felipecesar.tests_junit_mockito.dto.TodoDTO;
+import br.com.felipecesar.tests_junit_mockito.service.TodoService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("todos")
-public class TodoController extends GenericController<TodoEntity, Integer> {
+public class TodoController extends GenericController<TodoDTO, Long> {
 
-    public TodoController(TodoServiceImpl service) {
+
+    public TodoController(TodoService service) {
         super(service);
     }
 
